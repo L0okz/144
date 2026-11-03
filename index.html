@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>OX PS4</title>
+    <meta name="theme-color" content="#080d16" />
+    <title>OX PS4 · Launcher</title>
     <script>
       (function () {
         var appCache = window.applicationCache;
@@ -23,43 +24,67 @@
         } catch (e) {}
       })();
     </script>
-
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body>
-    <!-- Every run starts from here. The referrer guard in jb.js arms the chain
-         only when it was reached from this page, so that a browser restoring
-         its last session cannot re-run it unattended. -->
-    <div id="brand"><b>OX PS4</b></div>
+  <body class="landing-body">
+    <!-- Keep this page as the launcher entry point. The exploit page remains
+         isolated and is intentionally not styled or scripted from here. -->
+    <header id="brand" class="topbar">
+      <div class="brand-mark"><span class="brand-symbol">OX</span><span class="brand-name">OX <b>PS4</b></span></div>
+      <div class="top-meta"><span class="live-dot"></span> LOCAL LAUNCHER <i></i> FW 14.00</div>
+    </header>
 
-    <div class="shell">
-      <img class="meme" src="meme.png" alt="" />
+    <main class="launcher-shell">
+      <section class="hero" aria-label="OX PS4">
+        <div class="hero-glow"></div>
+        <img class="meme" src="meme.png" alt="OX PS4 eagle emblem" />
+        <p class="hero-kicker">CONSOLE HOMEbrew</p>
+        <h1>Take control<span>.</span></h1>
+        <p class="hero-copy">A focused launch environment for your PS4.</p>
+        <div class="hero-tags"><span>FIRMWARE 14.00</span><span>OFFLINE CACHE</span></div>
+      </section>
 
-      <main class="panel">
-        <p class="lede">PS4 kernel exploit &middot; firmware 14.00</p>
+      <section class="panel" aria-labelledby="launch-title">
+        <div class="panel-head">
+          <div>
+            <p class="eyebrow">QUICK START</p>
+            <h2 id="launch-title">Payload launcher</h2>
+          </div>
+          <span class="panel-index">01 / 02</span>
+        </div>
+        <p class="lede">Choose the payload you want to launch.</p>
 
         <form class="pick" id="pick">
-          <label class="opt">
-            <input type="radio" name="payload" value="hen" />
-            <span>ps4-hen</span>
-          </label>
-          <label class="opt">
-            <input type="radio" name="payload" value="goldhen" checked />
-            <span>GoldHEN</span>
-          </label>
+          <fieldset class="payload-list">
+            <legend class="sr-only">Select payload</legend>
+            <label class="opt opt-hen">
+              <input type="radio" name="payload" value="hen" />
+              <span class="payload-icon">H</span>
+              <span class="payload-copy"><strong>PS4 HEN</strong><small>Homebrew Enabler</small></span>
+              <span class="choice-indicator"></span>
+            </label>
+            <label class="opt opt-gold">
+              <input type="radio" name="payload" value="goldhen" checked />
+              <span class="payload-icon">G</span>
+              <span class="payload-copy"><strong>GoldHEN</strong><small>GoldHEN payload</small></span>
+              <span class="choice-indicator"></span>
+            </label>
+          </fieldset>
 
-          <label class="opt opt-auto">
+          <label class="opt-auto" for="auto">
+            <span class="auto-copy"><strong>Automatic start</strong><small>Launch after a short countdown</small></span>
             <input type="checkbox" id="auto" checked />
-            <span>autostart</span>
+            <span class="switch" aria-hidden="true"></span>
           </label>
 
-          <button class="btn" type="submit">start</button>
-          <p class="count" id="count"></p>
+          <button class="btn" type="submit"><span>START PAYLOAD</span><span class="btn-arrow">→</span></button>
+          <p class="count" id="count" aria-live="polite"></p>
         </form>
-      </main>
-    </div>
+        <div class="panel-foot"><span class="shield">◇</span><span>Exploit page remains isolated for stability.</span></div>
+      </section>
+    </main>
 
-    <p class="byline">by o_x</p>
+    <footer class="page-footer"><span>OX PS4 <b>·</b> by o_x</span><span>USE AT YOUR OWN RISK</span></footer>
     <script src="launch.js"></script>
   </body>
 </html>
