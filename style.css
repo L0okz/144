@@ -36,3 +36,37 @@ body.log{display:flex;flex-direction:column;height:100vh}body.log #spin,body.log
 @media(max-width:720px){.topbar{height:62px;flex-basis:62px;padding:0 5%}.top-meta{font-size:8px;gap:7px}.launcher-shell{grid-template-columns:1fr;gap:22px;width:90%;max-width:540px;padding:28px 0 34px}.hero{min-height:0;padding:0 4px 4px}.meme{width:155px;max-height:112px;margin-bottom:13px}.hero h1{font-size:44px}.hero-copy{margin:10px 0 16px;font-size:13px}.panel{padding:23px}.diagnostics{padding:19px}.diag-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.diag-heading{align-items:flex-start;flex-direction:column}.page-footer{padding:13px 5%;font-size:8px}}
 @media(max-height:720px) and (min-width:721px){.launcher-shell{padding-top:22px;padding-bottom:24px}.hero{min-height:340px}.meme{width:245px;max-height:165px}.panel{padding:24px}.opt{min-height:70px}.diagnostics{padding:17px 22px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;animation:none!important}}
+
+/* OX PS4 V5 — visual polish only; legacy-WebKit-friendly, no exploit changes. */
+.topbar{background:rgba(5,10,19,.94);border-bottom-color:rgba(66,196,255,.2)}
+.brand-symbol{border-radius:10px;box-shadow:0 0 0 4px rgba(66,196,255,.045),0 0 30px rgba(40,163,235,.22),inset 0 1px rgba(255,255,255,.12)}
+.brand-name{letter-spacing:.2em}
+.launcher-shell{max-width:1320px;gap:5vw}
+.hero{padding-left:26px}
+.hero-glow{width:560px;height:560px;background:radial-gradient(circle,rgba(38,147,222,.24),rgba(45,100,185,.075) 42%,transparent 70%)}
+.meme{max-width:350px;filter:drop-shadow(0 18px 42px rgba(34,150,235,.3))}
+.hero-kicker{display:inline-block;padding:7px 10px;border:1px solid rgba(66,196,255,.25);border-radius:4px;background:rgba(10,34,54,.55)}
+.hero h1{text-shadow:0 7px 40px rgba(0,0,0,.36)}
+.hero-copy{max-width:390px;color:#b1c3d9}
+.hero-tags span{border-radius:4px;background:rgba(13,29,48,.8)}
+.panel{border-color:rgba(91,173,226,.34);border-radius:15px;background:linear-gradient(155deg,rgba(18,35,57,.99),rgba(8,16,29,.99));box-shadow:0 30px 90px rgba(0,0,0,.48),inset 0 1px rgba(255,255,255,.07)}
+.panel:before{height:3px;left:18px;right:18px}
+.panel h2{font-size:26px}
+.opt{min-height:86px;border-radius:10px;background:linear-gradient(110deg,rgba(5,14,26,.92),rgba(16,31,51,.78))}
+.opt:focus-within{border-color:rgba(66,196,255,.75);box-shadow:0 0 0 2px rgba(66,196,255,.12),0 10px 28px rgba(0,0,0,.2)}
+.opt:hover{transform:translateY(-1px)}
+.payload-icon{border-radius:10px}
+.opt-gold .payload-icon{box-shadow:0 0 20px rgba(140,121,255,.1),inset 0 1px rgba(255,255,255,.1)}
+.opt-hen .payload-icon{box-shadow:0 0 20px rgba(66,196,255,.1),inset 0 1px rgba(255,255,255,.1)}
+.btn{min-height:60px;border-radius:8px;background:linear-gradient(100deg,#087fbd 0%,#176bbd 48%,#6254c4 100%);box-shadow:0 12px 32px rgba(10,111,178,.3),inset 0 1px rgba(255,255,255,.24);letter-spacing:.2em}
+.btn:hover,.btn:focus{box-shadow:0 14px 38px rgba(10,111,178,.4),inset 0 1px rgba(255,255,255,.25)}
+.count{font-size:12px;color:#8cebd0}
+.diagnostics{border-color:rgba(105,158,211,.24);border-radius:12px;background:linear-gradient(115deg,rgba(12,25,42,.96),rgba(8,15,27,.94));box-shadow:0 18px 48px rgba(0,0,0,.23),inset 0 1px rgba(255,255,255,.04)}
+.diag-item{border-radius:7px;background:rgba(4,12,23,.56)}
+.diag-reset,.diag-refresh{border-radius:5px;min-height:36px}
+.page-footer{background:rgba(4,8,15,.82);border-top-color:rgba(66,196,255,.13)}
+button,input,label{-webkit-tap-highlight-color:transparent}
+button:focus{outline-offset:3px}
+@media(max-width:900px){.hero{padding-left:12px}.launcher-shell{gap:30px}}
+@media(max-width:720px){.hero{padding-left:2px}.panel{border-radius:13px}.panel h2{font-size:22px}.opt{min-height:76px}.btn{min-height:56px}.diagnostics{border-radius:10px}}
+@media(max-height:720px) and (min-width:721px){.launcher-shell{gap:4vw}.hero{padding-left:12px}}
