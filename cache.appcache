@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# OX-PS4 offline cache v2 - modern launcher UI
+# OX-PS4 offline cache v3 - diagnostics panel
 
 CACHE:
 index.html
@@ -7,6 +7,7 @@ cache.html
 jb.html
 style.css
 launch.js
+diagnostics.js
 afterglow.js
 core.js
 mem.js

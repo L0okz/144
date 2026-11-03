@@ -82,9 +82,24 @@
         </form>
         <div class="panel-foot"><span class="shield">◇</span><span>Exploit page remains isolated for stability.</span></div>
       </section>
+      <section class="diagnostics" aria-labelledby="diag-title">
+        <div class="diag-heading">
+          <div><p class="eyebrow">SYSTEM CHECK</p><h2 id="diag-title">Launcher diagnostics</h2></div>
+          <button class="diag-refresh" id="diag-refresh" type="button">CHECK AGAIN</button>
+        </div>
+        <p class="diag-intro">A lightweight check of browser support and saved launcher settings.</p>
+        <div class="diag-grid">
+          <div class="diag-item"><span class="diag-label">OFFLINE CACHE</span><strong id="diag-cache">Checking…</strong></div>
+          <div class="diag-item"><span class="diag-label">SETTINGS STORAGE</span><strong id="diag-storage">Checking…</strong></div>
+          <div class="diag-item"><span class="diag-label">SELECTED PAYLOAD</span><strong id="diag-payload">Checking…</strong></div>
+          <div class="diag-item"><span class="diag-label">AUTO START</span><strong id="diag-auto">Checking…</strong></div>
+        </div>
+        <p class="diag-note" id="diag-note" aria-live="polite">Diagnostics do not run or modify the exploit.</p>
+      </section>
     </main>
 
     <footer class="page-footer"><span>OX PS4 <b>·</b> by o_x</span><span>USE AT YOUR OWN RISK</span></footer>
+    <script src="diagnostics.js"></script>
     <script src="launch.js"></script>
   </body>
 </html>
