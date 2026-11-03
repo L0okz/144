@@ -1,0 +1,25 @@
+CACHE MANIFEST
+# OX-PS4 offline cache v1
+
+CACHE:
+index.html
+cache.html
+jb.html
+style.css
+launch.js
+afterglow.js
+core.js
+mem.js
+int64.js
+ps4_offsets.js
+jb.js
+meme.png
+goldhen.bin
+hen.bin
+patchset.bin
+
+NETWORK:
+*
+
+FALLBACK:
+/ index.html

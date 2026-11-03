@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en" manifest="cache.appcache">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>OX PS4 · Offline Cache</title>
+  <style>
+    body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+      background:#0b0d10;color:#e6ebf2;font:16px/1.5 monospace;text-align:center}
+    main{width:min(88vw,520px);padding:28px;border:1px solid #263241;border-radius:12px;background:#11151b}
+    h1{font-size:20px;letter-spacing:.12em}
+    #status{margin:20px 0;color:#7fd0a0}
+    #bar{height:9px;background:#263241;border-radius:10px;overflow:hidden}
+    #fill{height:100%;width:0;background:#7fd0a0;transition:width .15s}
+    #detail{font-size:12px;color:#9aa6b7;white-space:pre-wrap;margin-top:14px}
+  </style>
+</head>
+<body>
+<main>
+  <h1>OX PS4 · OFFLINE CACHE</h1>
+  <div id="status">Preparing offline files…</div>
+  <div id="bar"><div id="fill"></div></div>
+  <div id="detail">Keep this page open until caching finishes.</div>
+  <button id="return" type="button" style="display:inline-block;margin-top:18px;padding:12px 20px;border:0;border-radius:7px;background:#7fd0a0;color:#07110b;font-weight:bold;font-size:15px">Return to OX PS4</button>
+</main>
+<script>
+(function(){
+  var ac=window.applicationCache;
+  var status=document.getElementById("status");
+  var detail=document.getElementById("detail");
+  var fill=document.getElementById("fill");
+  var returnButton=document.getElementById("return");
+  var completed=false, idleSince=0, redirectTimer=null;
+
+  function goHome(){ window.location.replace("./index.html"); }
+  if(returnButton) returnButton.onclick=goHome;
+
+  function done(message){
+    if(completed) return;
+    completed=true;
+    status.textContent=message;
+    fill.style.width="100%";
+    detail.textContent="Offline cache is ready. Returning to OX PS4…";
+    if(returnButton) returnButton.style.display="inline-block";
+    if(redirectTimer) clearTimeout(redirectTimer);
+    redirectTimer=setTimeout(goHome,2200);
+  }
+
+  if(!ac){
+    status.textContent="Application Cache is not supported";
+    detail.textContent="This browser does not expose the Application Cache API.";
+    if(returnButton) returnButton.style.display="inline-block";
+    return;
+  }
+
+  ac.addEventListener("checking",function(){ idleSince=0; status.textContent="Checking cache…"; });
+  ac.addEventListener("downloading",function(){ idleSince=0; status.textContent="Downloading offline files…"; });
+  ac.addEventListener("progress",function(e){
+    if(e.total){
+      var percent=Math.round(e.loaded/e.total*100);
+      fill.style.width=percent+"%";
+      detail.textContent="Installing "+percent+"% ("+e.loaded+"/"+e.total+")";
+    }
+  });
+  ac.addEventListener("cached",function(){ done("Offline cache installed ✓"); });
+  ac.addEventListener("noupdate",function(){ done("Offline cache already current ✓"); });
+  ac.addEventListener("updateready",function(){
+    try{ ac.swapCache(); }catch(e){}
+    done("Offline cache updated ✓");
+  });
+  ac.addEventListener("error",function(){
+    status.textContent="Cache event finished with an error";
+    detail.textContent="Cache reported an error. If files are already cached, use the return button.";
+    if(returnButton) returnButton.style.display="inline-block";
+  });
+  ac.addEventListener("obsolete",function(){
+    status.textContent="Cache manifest is obsolete";
+    detail.textContent="The offline manifest is no longer valid.";
+    if(returnButton) returnButton.style.display="inline-block";
+  });
+
+  // Fallback for PS4 WebKit versions that omit cached/noupdate events.
+  var startedAt=Date.now();
+  var poll=setInterval(function(){
+    if(completed){ clearInterval(poll); return; }
+    var state=ac.status;
+    if(state===ac.IDLE || state===ac.UPDATEREADY){
+      if(!idleSince) idleSince=Date.now();
+      if(Date.now()-idleSince>=2500 && Date.now()-startedAt>=3000){
+        if(state===ac.UPDATEREADY){ try{ ac.swapCache(); }catch(e){} }
+        done("Offline cache ready ✓");
+      }
+    }else{
+      idleSince=0;
+      if(state===ac.CHECKING) status.textContent="Checking cache…";
+      if(state===ac.DOWNLOADING) status.textContent="Downloading offline files…";
+    }
+  },500);
+
+  // Manual escape hatch if automatic navigation is blocked by the browser.
+  setTimeout(function(){ if(returnButton) returnButton.style.display="inline-block"; },1500);
+})();
+</script>
+</body>
+</html>

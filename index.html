@@ -1,9 +1,29 @@
 <!doctype html>
-<html class="landing" lang="en">
+<html class="landing" lang="en" manifest="cache.appcache">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>OX PS4</title>
+    <script>
+      (function () {
+        var appCache = window.applicationCache;
+        if (!appCache) return;
+        try {
+          // Only send a first-time visitor to the installer page.
+          // CHECKING/DOWNLOADING can occur during the return navigation too;
+          // redirecting on those states creates a cache.html <-> index.html loop.
+          if (appCache.status === appCache.UNCACHED) {
+            location.replace("./cache.html");
+            return;
+          }
+          if (appCache.status === appCache.UPDATEREADY) {
+            appCache.swapCache();
+            location.reload();
+          }
+        } catch (e) {}
+      })();
+    </script>
+
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
@@ -40,8 +60,6 @@
     </div>
 
     <p class="byline">by o_x</p>
-    <p class="byline" id="offline-status" aria-live="polite">offline cache: checking...</p>
-    <script src="offline.js"></script>
     <script src="launch.js"></script>
   </body>
 </html>

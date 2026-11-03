@@ -37,16 +37,13 @@ class Handler(SimpleHTTPRequestHandler):
         ".js": "text/javascript",
         ".css": "text/css",
         ".bin": "application/octet-stream",
+        ".appcache": "text/cache-manifest",
     }
 
     CACHEABLE = (".png", ".jpg", ".jpeg", ".gif", ".webp", ".ico")
 
     def end_headers(self):
-        clean_path = self.path.split("?")[0].lower()
-        if clean_path.endswith("/sw.js") or clean_path == "/sw.js":
-            self.send_header("Cache-Control", "no-cache")
-            self.send_header("Service-Worker-Allowed", "/")
-        elif clean_path.endswith(self.CACHEABLE):
+        if self.path.split("?")[0].lower().endswith(self.CACHEABLE):
             self.send_header("Cache-Control", "public, max-age=604800")
         else:
             self.send_header("Cache-Control", "no-store, must-revalidate")

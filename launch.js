@@ -64,16 +64,6 @@ function stopClock() {
 }
 
 function startClock() {
-  /* Let the first-visit precache finish before the autostart navigation. */
-  var ready = window.__offlineReady || Promise.resolve();
-  ready.then(function () {
-    if (!autoBox.checked || DONE) return;
-    beginClock();
-  });
-}
-
-function beginClock() {
-  stopClock();
   var left = AUTOSTART_SECONDS;
   countEl.textContent = "starting in " + left + "s";
   ticker = setInterval(function () {
