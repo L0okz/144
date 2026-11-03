@@ -52,6 +52,7 @@ function picked() {
 
 function start() {
   stopClock();
+  remember();
   location.href = "jb.html?" + TARGET[picked()];
 }
 
@@ -64,6 +65,7 @@ function stopClock() {
 }
 
 function startClock() {
+  if (ticker !== null) return;
   var left = AUTOSTART_SECONDS;
   countEl.textContent = "starting in " + left + "s";
   ticker = setInterval(function () {

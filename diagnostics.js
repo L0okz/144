@@ -60,5 +60,46 @@
   }
   var button = byId("diag-refresh");
   if (button) button.addEventListener("click", run);
+
+  /* Explicit user-triggered recovery for damaged or unwanted preferences.
+     This touches only the launcher's two saved choices, never exploit data. */
+  var reset = byId("diag-reset");
+  if (reset) reset.addEventListener("click", function () {
+    try {
+      var form = byId("pick");
+      var gold = form && form.querySelector('input[name="payload"][value="goldhen"]');
+      var auto = byId("auto");
+      if (gold) gold.checked = true;
+      if (auto) auto.checked = true;
+      localStorage.setItem(KEY, JSON.stringify({ payload: "goldhen", autostart: true }));
+      /* Notify launch.js so an already-open page also restarts its countdown. */
+      if (gold && document.createEvent) {
+        var payloadEvent = document.createEvent("HTMLEvents");
+        payloadEvent.initEvent("change", true, false);
+        gold.dispatchEvent(payloadEvent);
+      }
+      if (auto && document.createEvent) {
+        var autoEvent = document.createEvent("HTMLEvents");
+        autoEvent.initEvent("change", true, false);
+        auto.dispatchEvent(autoEvent);
+      }
+      var note = byId("diag-note");
+      if (note) note.textContent = "Settings restored to GoldHEN + automatic start. Exploit files were not changed.";
+      run();
+    } catch (e) {
+      var note = byId("diag-note");
+      if (note) note.textContent = "Could not reset settings: browser storage is unavailable.";
+      run();
+    }
+  });
+
+  /* Refresh the visible state when the legacy cache changes in the background. */
+  try {
+    if (window.applicationCache && window.applicationCache.addEventListener) {
+      ["checking", "downloading", "progress", "cached", "noupdate", "updateready", "obsolete", "error"].forEach(function (name) {
+        window.applicationCache.addEventListener(name, run, false);
+      });
+    }
+  } catch (e) {}
   run();
 })();
